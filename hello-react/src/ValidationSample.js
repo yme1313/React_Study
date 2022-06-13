@@ -1,4 +1,4 @@
-//5.2 ref 사용
+
 import React, { Component } from "react";
 import './ValidationSample.css'
 
