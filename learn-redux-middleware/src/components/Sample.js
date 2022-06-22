@@ -1,3 +1,5 @@
+import React from "react";
+
 const Sample = ({ loadingPost, loadingUsers, post, users }) => {
   return (
     <div>
