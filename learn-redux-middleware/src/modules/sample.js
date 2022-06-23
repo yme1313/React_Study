@@ -12,10 +12,6 @@ export const getPost = createRequestThunk(GET_POST, api.getPost);
 export const getUsers = createRequestThunk(GET_USERS, api.getUsers);
 
 const initialState = {
-  loading : {
-    GET_POST : false,
-    GET_USERS : false
-  },
   post : null,
   users : null
 };

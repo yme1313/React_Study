@@ -2,7 +2,7 @@ import { startLoading, finishLoading } from "../modules/loading";
 
 export default function createRequestThunk(type, request) {
 
-	const SUCEESS = `${type}_SUCEESS`;
+	const SUCCESS = `${type}_SUCCESS`;
 	const FAILURE = `${type}_FAILURE`;
 
 	return params => async dispatch => {
@@ -10,7 +10,7 @@ export default function createRequestThunk(type, request) {
 		try {
 			const response = await request(params);
 			dispatch({
-				type : SUCEESS,
+				type : SUCCESS,
 				payload : response.data
 			});
 			dispatch(finishLoading(type));
