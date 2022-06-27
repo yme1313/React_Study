@@ -3,8 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { changeField, initializeForm, login } from '../../modules/auth';
 import AuthForm from '../../components/auth/AuthForm';
 import { check } from '../../modules/user';
+import { useNavigate } from 'react-router-dom';
 
-const LoginForm = ({ history }) => {
+const LoginForm = () => {
+  const navigate = useNavigate();
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
@@ -14,7 +16,7 @@ const LoginForm = ({ history }) => {
     user: user.user,
   }));
   // 인풋 변경 이벤트 핸들러
-  const onChange = e => {
+  const onChange = (e) => {
     const { value, name } = e.target;
     dispatch(
       changeField({
@@ -26,7 +28,7 @@ const LoginForm = ({ history }) => {
   };
 
   // 폼 등록 이벤트 핸들러
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     const { username, password } = form;
     dispatch(login({ username, password }));
@@ -52,9 +54,14 @@ const LoginForm = ({ history }) => {
 
   useEffect(() => {
     if (user) {
-      history.push('/');
+      navigate('/');
+      try {
+        localStorage.setItem('user', JSON.stringify(user));
+      } catch (e) {
+        console.log('localStorage is not working');
+      }
     }
-  }, [history, user]);
+  }, [navigate, user]);
 
   return (
     <AuthForm

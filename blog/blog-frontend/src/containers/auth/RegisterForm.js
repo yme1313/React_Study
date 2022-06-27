@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeField, initializeForm, register } from '../../modules/auth';
 import AuthForm from '../../components/auth/AuthForm';
 import { check } from '../../modules/user';
+import { useNavigate } from 'react-router-dom';
 
-const RegisterForm = ({ history }) => {
+const RegisterForm = () => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
@@ -13,8 +14,10 @@ const RegisterForm = ({ history }) => {
     authError: auth.authError,
     user: user.user,
   }));
+  const navigate = useNavigate();
+
   // 인풋 변경 이벤트 핸들러
-  const onChange = e => {
+  const onChange = (e) => {
     const { value, name } = e.target;
     dispatch(
       changeField({
@@ -26,7 +29,7 @@ const RegisterForm = ({ history }) => {
   };
 
   // 폼 등록 이벤트 핸들러
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     const { username, password, passwordConfirm } = form;
     // 하나라도 비어있다면
@@ -74,11 +77,14 @@ const RegisterForm = ({ history }) => {
   // user 값이 잘 설정되었는지 확인
   useEffect(() => {
     if (user) {
-      console.log('check API 성공');
-      console.log(user);
-      history.push('/'); // 홈 화면으로 이동
+      navigate('/'); // 홈 화면으로 이동
+      try {
+        localStorage.setItem('user', JSON.stringify(user));
+      } catch (e) {
+        console.log('localStorage is not working');
+      }
     }
-  }, [history, user]);
+  }, [navigate, user]);
 
   return (
     <AuthForm
