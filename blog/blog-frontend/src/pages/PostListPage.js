@@ -1,4 +1,4 @@
-import HeaderContainer from "../components/common/HeaderContainer";
+import HeaderContainer from '../containers/commons/HeaderContainer';
 
 const PostListPage = () => {
 	return (

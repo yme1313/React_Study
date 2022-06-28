@@ -1,5 +1,14 @@
+import Editor from "../components/write/Editor";
+import TagBox from "../components/write/TagBox";
+import Responsive from "../components/common/Responsive";
+
 const WritePage = () => {
-	return <div>글쓰기</div>
+	return (
+		<Responsive>
+			<Editor />
+			<TagBox />
+		</Responsive>
+	)
 }
 
 export default WritePage;
