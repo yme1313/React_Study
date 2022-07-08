@@ -34,7 +34,7 @@ const QuillWrapper = styled.div`
 	}
 `;
 
-const Editor = () => {
+const Editor = ({ title, body, onChaneField }) => {
 	const quillElement = useRef(null); // Quil을 적용할 DivElement를 설정
 	const quillInstance = useRef(null); // Quil 인스턴스 설정
 
@@ -51,11 +51,26 @@ const Editor = () => {
 				]
 			}
 		})
-	},[])
+
+		const quill = quillInstance.current;
+		quill.on('text-change', (delta, oldDelta, source) => {
+			if (source === 'user'){
+				onChaneField({ key : 'body', value : quill.root.innerHTML })
+			}
+		})
+	},[onChaneField])
+
+	const onChangeTitle = e => {
+		onChaneField({ key: 'title', value: e.target.value })
+	}
 
 	return (
 		<EditBlcok>
-			<TitleInput placeholder='제목을 입력하세요' />
+			<TitleInput 
+				placeholder='제목을 입력하세요'
+				onChange={onChangeTitle}
+				value={title} 
+			/>
 			<QuillWrapper>
 				<div ref={quillElement} />
 			</QuillWrapper>
