@@ -60,6 +60,13 @@ const Editor = ({ title, body, onChaneField }) => {
 		})
 	},[onChaneField])
 
+	const mounted = useRef(false);
+	useEffect(() => {
+		if (mounted.current) return;
+		mounted.current = true;
+		quillInstance.current.root.innerHTML = body;
+	},[body]);
+
 	const onChangeTitle = e => {
 		onChaneField({ key: 'title', value: e.target.value })
 	}
